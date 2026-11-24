@@ -16,3 +16,7 @@ streamlit
 tenacity
 pytest
 ipykernel
+# isort
+# mypy
+# ruff
+# pytest
