@@ -6,7 +6,6 @@ pyarrow
 s3fs
 pandera
 langdetect
-sentence-transformers
 chromadb
 openai
 scikit-learn
