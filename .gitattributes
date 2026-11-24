@@ -1,0 +1,14 @@
+###         Deux conventions historiques :      ###
+# •LF (Line Feed, \n) : la convention Linux/macOS ;
+# •CRLF (Carriage Return + Line Feed, \r\n) : la convention Windows.
+# Le CSV Kaggle a été enregistré avec des fins de ligne LF et le conflit de fin de ligne LF/ CRLF risque de provoquer des erreurs 
+# dans le code Python. Pour éviter ce problème, on force la conversion en LF dans le repo Git.
+
+# Les fichiers texte sont normalisés en LF dans le repo
+* text=auto
+
+# Forge LF, notre environnement cible, et tout ce qui tournera dans Docker
+*.py    text eol=lf
+*.csv   text
+*.md    text
+*.json  text

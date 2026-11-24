@@ -5,7 +5,6 @@ __pycache__/
 # --- Ajouts adoptionia ---
 .env
 .venv/
-data/
 logs/
 hf_cache/
 mlruns/
@@ -14,3 +13,5 @@ mlruns/
 *.tfstate
 *.tfstate.backup
 .DS_Store
+# --- dataset lourd --- téléchargé par script, jamais versionné
+data/raw/
