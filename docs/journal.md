@@ -30,10 +30,29 @@
 - Un fichier JSON par commentaire, nommé par son identifiant : si le fichier existe déjà, on ne le réécrit pas → script idempotent, relançable sans doublons
 - Région eu-north-1 (Stockholm) : imposée par le nouveau plan gratuit AWS (organisé en projets, sans sélecteur de région) ; .env, Terraform et guide mis à jour en conséquence
 - Guide ADKAR : signaux = extraits courts de vrais commentaires HN ; définitions et actions manager rédigées avec nos mots (pas de copie de sources protégées)
-**Chiffres :** ... fichiers dans raw/hn/ ; 2e lancement : ... nouveaux, ... déjà présents ; 31 signaux ADKAR (Awareness 6, Desire 7, Knowledge 6, Ability 7, Reinforcement 5) tirés de 18 commentaires
+**Chiffres :** 31 signaux ADKAR (Awareness 6, Desire 7, Knowledge 6, Ability 7, Reinforcement 5) tirés de 18 commentaires
 **Problème rencontré + solution :**
 - Pas de sélecteur de région dans la console AWS → région trouvée dans settings.aws.com (Project → Region), guide adapté à eu-north-1
 - Charte « disparue » de VS Code → elle était sur la branche 1-charte, pas encore fusionnée dans main
 - Schéma d'architecture non suivi par Git (U) → ajouté à la branche 1-charte et poussé
 - Notebook d'Alexandre absent de main → sa Pull Request n'avait pas été créée ; créée depuis GitHub (New pull request, compare 2-exploration-hn) puis fusionnée
 **Preuve :** capture du 2e lancement de l'ingestion, PR #.. (ingestion HN), PR #.. (guide ADKAR), PR #.. (exploration HN)
+
+## J3 - 25/11/2026
+**Fait :**
+Essai Terraform
+terraform init        # télécharge le "plugin" AWS (une fois par dossier)
+terraform plan        # montre ce qui VA être créé, sans rien faire
+terraform apply       # crée réellement : tapez yes puis Entrée
+terraform destroy     # supprimer le bucket S3
+
+**Chiffres :**
+1240 fichiers bruts lus
+Écrit : s3://adoptionia-dev-md/clean/verbatims.parquet (598 lignes)
+Lignes restantes après chaque étape :
+  entree                    1240
+  apres_doublons_id         1102
+  apres_doublons_texte      1085
+  apres_longueur             960
+  apres_filtre_travail       612
+  apres_langue               598

@@ -56,3 +56,12 @@ La configuration à reprendre dans l'ETL (`MOTS_CLES`, `ENDPOINT`, `FILTRES`) se
 - Les étapes Knowledge et Reinforcement sont peu représentées. Ability (la mise en pratique qui échoue) domine.
 - Notation faite par une seule personne. Un deuxième annotateur sur une centaine de commentaires renforcerait le résultat.
 - Les témoignages pertinents sont surtout récents (2025-2026). Avant 2025, seul un commentaire sur cinq est utile environ.
+
+
+## Jour 2 — Partie 7 : Commencer le guide ADKAR (Marine)
+
+https://docs.google.com/spreadsheets/d/1W936TQeUWrjJgbOS5q2qEh7ce0rEgzYP/edit?usp=sharing&ouid=112029323168542978884&rtpof=true&sd=true
+
+Pour créer le guide, j'ai repris les commentaires clean du dataset HN et j'ai créé ensuite dans adkar_guide.md toutes les actions à proposer au manager suivant chaque problématique et les signaux que l'on reçoit. 
+
+
