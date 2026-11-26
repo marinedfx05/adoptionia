@@ -20,6 +20,16 @@ Quelles actions lancer cette semaine pour faire progresser l'adoption.
 LLM + RAG : nos données sont du texte libre et notre sortie est un texte rédigé ;
 le RAG oblige le modèle à s'appuyer sur nos données réelles plutôt que d'inventer.
 
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=
+S3_BUCKET=
+LLM_API_KEY=
+LLM_MODEL=
+DISCORD_WEBHOOK=
+HASH_SALT=
+EMBEDDING_MODEL=
+
 ## Données
 - Source principale : commentaires Hacker News
     Quoi : commentaires publics du forum Hacker News, récupérés via l'API Algolia (https://hn.algolia.com/api/v1/), gratuite et sans clé.
