@@ -6,7 +6,7 @@ from openai import OpenAI
 load_dotenv()
 client = OpenAI(
     api_key=os.environ["LLM_API_KEY"],
-    base_url=os.environ["JEDHA_AI_BASE_URL"]
+    base_url=os.environ.get("JEDHA_AI_BASE_URL")
 )
 
 MODEL = os.environ.get("LLM_MODEL", "openai/gpt-4.1-mini")
