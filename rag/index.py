@@ -16,8 +16,9 @@ def index_verbatims(df: pd.DataFrame) -> int:
             ids.append(f"{row['verbatim_id']}_{i}")              # identifiant unique de chaque morceau
             docs.append(chunk)
             metas.append({"verbatim_id": row["verbatim_id"],     # pour retrouver le verbatim d'origine
-                          "source": row["source"],
+                        "source": row["source"],
                           "lang": row["lang"],
+                          "adkar_stage": str(row.get("adkar_stage", "unknown")),
                           "created_on": str(row["created_on"].date())})
     for start in range(0, len(ids), 500):                       # par paquets de 500
         end = start + 500
@@ -34,6 +35,9 @@ def index_knowledge(path: str = "knowledge/adkar_guide.md") -> int:
     return len(sections)
 
 if __name__ == "__main__":
-    df = pd.read_parquet(f"s3://{os.environ['S3_BUCKET']}/clean/verbatims.parquet")
+    try:
+        df = pd.read_parquet(f"s3://{os.environ['S3_BUCKET']}/clean/classified.parquet")
+    except Exception:
+        df = pd.read_parquet(f"s3://{os.environ['S3_BUCKET']}/clean/verbatims.parquet")
     print("Morceaux de verbatims indexés :", index_verbatims(df))
     print("Sections ADKAR indexées :", index_knowledge())

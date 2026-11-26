@@ -5,8 +5,9 @@ from openai import OpenAI
 
 load_dotenv()
 client = OpenAI(
-    api_key=os.environ["LLM_API_KEY"],
-    base_url=os.environ["JEDHA_AI_BASE_URL"]
+    # Accepte les deux noms de clé, comme rag/embedder.py : LLM_API_KEY (clé OpenAI) ou JEDHA_AI_API_KEY
+    api_key=os.environ.get("LLM_API_KEY") or os.environ["JEDHA_AI_API_KEY"],
+    base_url=os.environ.get("JEDHA_AI_BASE_URL")
 )
 
 MODEL = os.environ.get("LLM_MODEL", "openai/gpt-4.1-mini")
