@@ -3,7 +3,7 @@ from rag.embedder import embed
 from rag.store import get_collection
 from rag.llm import ask
 
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 STAGES = ["Awareness", "Desire", "Knowledge", "Ability", "Reinforcement", "none"]
 
 PROMPT = """Tu es expert en conduite du changement et tu utilises le modèle ADKAR.
@@ -16,6 +16,8 @@ Verbatim d'un employé :
 Consignes :
 - Choisis la PREMIÈRE étape ADKAR qui bloque cette personne.
 - Si le verbatim ne parle pas d'une difficulté d'adoption de l'IA au travail, réponds "none".
+- Réponds "none" si le texte ne décrit pas une difficulté CONCRÈTE d'adoption de l'IA dans une équipe : publicité ou présentation d'un produit, opinion générale sur l'IA, marché de l'emploi ou peur du chômage, témoignage positif sans frein.
+- En cas de doute entre une étape et "none", choisis "none".
 Réponds uniquement avec ce JSON :
 {{"adkar_stage": "Awareness|Desire|Knowledge|Ability|Reinforcement|none",
   "friction": true ou false,
