@@ -6,8 +6,10 @@ from langdetect import detect, DetectorFactory
 DetectorFactory.seed = 0                     # rend la détection de langue stable d'un lancement à l'autre
 load_dotenv()
 
-WORK_WORDS = ["company", "team", "manager", "job", "employer", "colleague",
+WORK_WORDS = ["company", "companies", "team", "manager", "job", "employer", "colleague",
               "boss", "workplace", "coworker", "management", "office", "work"]
+# \b = début de mot : "teams" ou "workplace" comptent, mais plus "network" ni "steam" (revue de Florian, PR #35)
+WORK_PATTERN = re.compile(r"\b(?:" + "|".join(WORK_WORDS) + ")")
 # Fils d'offres d'emploi : pas des témoignages (décision du J1)
 HIRING_THREADS = r"who is hiring|seeking work|who wants to be hired|freelancer\? seeking"
 
@@ -45,14 +47,14 @@ def safe_lang(text: str) -> str:
         return "unknown"
 
 def is_about_work(text: str) -> bool:
-    t = text.lower()
-    return any(word in t for word in WORK_WORDS)
+    return bool(WORK_PATTERN.search(text.lower()))
 
 def clean_hn(raw: pd.DataFrame) -> tuple:
     """Applique toutes les règles et compte combien de lignes chaque règle retire."""
     stats = {"entree": len(raw)}
     raw = raw.dropna(subset=["comment_text"]);          stats["apres_texte_present"] = len(raw)
-    context = raw["story_title"].fillna("") if "story_title" in raw.columns else ""
+    # Le titre du fil peut lui aussi contenir un e-mail ou un lien : on l'anonymise comme le texte
+    context = raw["story_title"].fillna("").map(anonymize) if "story_title" in raw.columns else ""
     df = pd.DataFrame({
         "verbatim_id": "hn_" + raw["objectID"].astype(str),
         "source": "hn",
