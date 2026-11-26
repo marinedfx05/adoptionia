@@ -1,0 +1,20 @@
+services:
+  api:                                   # la "cuisine" : l'IA
+    build: .                             # construit l'image à partir du Dockerfile
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    env_file: .env                       # les secrets sont lus ici, jamais copiés dans l'image
+    volumes:
+      - ./data:/app/data                 # ChromaDB reste sur le disque, même si la boîte redémarre
+      - ./logs:/app/logs                 # les journaux aussi
+    ports:
+      - "127.0.0.1:8000:8000"            # API joignable seulement depuis la machine elle-même
+    restart: always                      # redémarre toute seule si elle plante
+  ui:                                    # la "salle" : l'interface du manager
+    build: .
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
+    environment:
+      - API_URL=http://api:8000          # dans Docker, "api" = le nom du service ci-dessus
+    ports:
+      - "8501:8501"                      # interface publique
+    depends_on: [api]
+    restart: always

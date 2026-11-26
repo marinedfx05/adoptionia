@@ -1,0 +1,11 @@
+.env
+.venv/
+data/raw/
+logs/
+hf_cache/
+mlruns/
+mlflow.db
+.git/
+.vscode/
+infra/
+notebooks/
