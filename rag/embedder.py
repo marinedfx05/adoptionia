@@ -9,7 +9,10 @@ MODEL_NAME = os.environ.get("EMBEDDING_MODEL", "openai/text-embedding-3-small")
 
 @lru_cache                       # crée la connexion une seule fois
 def get_client() -> OpenAI:
-    return OpenAI(api_key=os.environ["LLM_API_KEY"])
+    # Accepte les deux noms de clé : LLM_API_KEY (guide) ou JEDHA_AI_API_KEY (.env de l'équipe)
+    api_key = os.environ.get("LLM_API_KEY") or os.environ["JEDHA_AI_API_KEY"]
+    # Passe par l'API Jedha si son adresse est dans le .env (sinon : OpenAI directement)
+    return OpenAI(api_key=api_key, base_url=os.environ.get("JEDHA_AI_BASE_URL"))
 
 def embed(texts: list) -> list:
     """Transforme une liste de textes en liste d'embeddings (listes de 1 536 nombres)."""
