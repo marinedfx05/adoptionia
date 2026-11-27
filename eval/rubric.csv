@@ -1,0 +1,32 @@
+Plan,Etape,Correcteur,Pertinent,Actionnable,Fondé,,Résultats,
+,,,,,,,Score rubric (moyenne générale /5),"4,344444444"
+1,Awareness,Florian,5,5,5,,Moyenne pertinent,"4,6"
+1,Awareness,Alexandre,4,"3,5",3,,Moyenne actionnable,"4,466666667"
+1,Awareness,Sasha,5,5,4,,Moyenne fondé,"3,966666667"
+2,Awareness,Florian,5,3,5,,Notes saisies (sur 90),90
+2,Awareness,Alexandre,5,4,3,,,
+2,Awareness,Sasha,5,5,3,,Moyenne par étape,
+3,Desire,Florian,5,5,5,,Awareness,"4,305555556"
+3,Desire,Alexandre,4,5,5,,Desire,"4,611111111"
+3,Desire,Sasha,5,5,4,,Knowledge,"3,916666667"
+4,Desire,Florian,5,5,4,,Ability,"4,5"
+4,Desire,Alexandre,5,5,3,,Reinforcement,"4,388888889"
+4,Desire,Sasha,4,5,4,,,
+5,Knowledge,Florian,5,2,3,,Légende,
+5,Knowledge,Alexandre,5,"3,5",3,,Cases jaunes : chaque correcteur met une note entière de 1 à 5.,
+5,Knowledge,Sasha,5,4,4,,1 = pas du tout · 3 = en partie · 5 = tout à fait.,
+6,Knowledge,Florian,4,3,5,,pertinent : le plan répond au blocage de l'étape ADKAR.,
+6,Knowledge,Alexandre,4,4,3,,"actionnable : un manager peut l'appliquer demain (quoi, qui, quand).",
+6,Knowledge,Sasha,5,4,4,,fondé : chaque action cite des verbatims qui la justifient vraiment.,
+7,Ability,Florian,5,5,5,,"Exemple de ligne remplie : plan 1, Awareness, Marine → 4, 3, 5.",
+7,Ability,Alexandre,5,5,3,,,
+7,Ability,Sasha,4,5,3,,,
+8,Ability,Florian,3,5,5,,,
+8,Ability,Alexandre,5,5,4,,,
+8,Ability,Sasha,5,5,4,,,
+9,Reinforcement,Florian,5,4,5,,,
+9,Reinforcement,Alexandre,4,4,4,,,
+9,Reinforcement,Sasha,4,5,3,,,
+10,Reinforcement,Florian,3,5,5,,,
+10,Reinforcement,Alexandre,5,5,4,,,
+10,Reinforcement,Sasha,5,5,4,,,
