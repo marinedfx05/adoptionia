@@ -5,7 +5,7 @@ __pycache__/
 # --- Ajouts adoptionia ---
 .env
 .venv/
-data/raw/
+data
 logs/
 hf_cache/
 mlruns/
