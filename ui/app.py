@@ -45,14 +45,16 @@ if page == "Tableau de bord":
     if par_etape.sum() > 0:
         principal = par_etape.idxmax()
         part = par_etape.max() / par_etape.sum()
-        st.metric("Blocage principal", principal, f"{part:.0%} des frictions", delta_color="off")
+        st.metric("Blocage principal", principal, f"{part:.0%} des frictions",
+                  delta_color="off", delta_arrow="off")      # une part, pas une hausse : pas de flèche
     else:
         st.info("Aucune friction détectée pour l'instant.")
     c1, c2 = st.columns(2)
     c1.metric("Verbatims analysés", s["total_verbatims"])
     c2.metric("Frictions détectées", s["total_frictions"])
     st.subheader("Frictions par étape ADKAR")
-    st.bar_chart(par_etape)
+    st.bar_chart(par_etape.rename("frictions"), sort=False,    # sort=False : ordre ADKAR, pas alphabétique
+                 x_label="Étape ADKAR", y_label="Nombre de frictions")
     st.subheader("Thèmes les plus fréquents")
     st.table(pd.Series(s["top_themes"], name="nombre", dtype=int))
     st.caption(f"Dernière mise à jour des données : {s['derniere_maj']}")
