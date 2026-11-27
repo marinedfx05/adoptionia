@@ -161,3 +161,42 @@ Signaux ADKAR repérés par mots-clés : 163 verbatims candidats (Awareness 65, 
 - Limite à assumer : le jeu de test a été pré-annoté par un LLM puis corrigé à la main ; l'accord entre deux humains (étape 2.4) n'a pas été mesuré.
 
 **Preuve :** `docs/img/j5_mlflow.png`, `docs/img/j5_mlflow_v1_v2.png` (branche `23-evaluation`), `eval/results_v1.csv`, `eval/results_v2.csv`, `eval/plans_a_noter.md`, `eval/rubric.csv`, PR #48, #49, #50, #51
+
+
+
+## J6 — 27/11/2026
+
+**Fait :**
+- Sasha : API FastAPI à 4 routes (`api/main.py`, PR #56) : `/health` (l'application répond), `/analyze` (classe un nouveau verbatim), `/stats` (frictions par étape et par thème pour le tableau de bord), `/action-plan` (plan d'action RAG). Documentation automatique sur `/docs`.
+- Alexandre : interface Streamlit à 3 pages pour le manager (`ui/app.py`, PR #57) : tableau de bord, plan d'action avec les verbatims utilisés, analyse d'un verbatim. Correction du graphique (ordre ADKAR, axes nommés) et captures des 3 pages (PR #58).
+- Florian : Dockerfile, `.dockerignore` et `docker-compose.yml` (PR #51, à terminer au J7) ; test Docker au tour 4 de l'étape 7.
+- Marine : fichiers Terraform de production (`infra/main.tf`, `infra/variables.tf`, PR #54) vérifiés avec `terraform plan`, sans `apply` ; envoi des 10 plans et de la grille de notation (PR #55) ; relecture et merge des PR #56 et #57, relecture de la PR #51.
+- Les quatre : test de bout en bout à distance, en relais sur Discord (Alexandre : collecte, nettoyage, classification → S3 ; Sasha puis Marine : indexation, API, interface sur leur propre Mac), vidéo de secours de la démo. Résultat : 460 verbatims propres et classés dans S3 (447 avant la nouvelle collecte).
+
+**Choix + pourquoi :**
+- Une API entre l'IA et l'interface : l'interface ne connaît que 4 adresses, on peut changer le LLM ou la base sans la toucher, et on pourra brancher d'autres outils plus tard.
+- Pydantic vérifie les entrées de l'API (texte de 10 à 3 000 caractères, étape ADKAR connue) : une mauvaise demande reçoit une erreur claire (400/422) au lieu de faire planter l'application.
+- L'interface affiche des données d'exemple et un avertissement si l'API ne répond pas : la démo ne s'arrête pas net.
+- Docker : la même application tourne à l'identique sur nos 4 Mac et sur le serveur. Les secrets restent dans `.env`, lu au lancement, jamais copié dans l'image. L'API n'est joignable que depuis la machine (`127.0.0.1:8000`), seule l'interface est publique (8501).
+- Terraform écrit aujourd'hui, appliqué demain : on vérifie à tête reposée la liste de ce qui sera créé (`plan`), et le serveur payant n'est allumé qu'au moment de s'en servir.
+- Sécurité de l'infrastructure : bucket S3 privé (accès public bloqué), serveur avec un rôle IAM limité à ce seul bucket (aucune clé AWS sur le serveur), SSH ouvert seulement depuis notre IP.
+- Test de bout en bout en relais : chacun·e lance sa partie sur son propre Mac, les données passent par le bucket S3 commun. Ça prouve aussi que l'application marche sur plusieurs machines.
+
+**Chiffres :**
+- Test de bout en bout : 460 verbatims propres et classés dans S3 après la nouvelle collecte (+13).
+- `/stats` (capture avant la nouvelle collecte) : 447 verbatims analysés, 226 frictions ; blocage principal **Ability** (89 frictions, 39 %), puis Desire 51, Awareness 47, Reinforcement 21, Knowledge 18.
+- Thèmes les plus fréquents : qualité du code produit par l'IA (7), peur de perdre son emploi (4), qualité et usage de l'IA (3), perte de plaisir au travail (3).
+- Plan d'action : 8 verbatims sources par plan 
+- `terraform plan` : 8 ressources à créer, 0 à modifier, 0 à supprimer.
+- Tests automatiques : 19 tests pytest OK.
+
+**Problème rencontré + solution :**
+- `terraform plan` refusé (`not a valid CIDR block`) : l'adresse IP collée était en IPv6, avec un `%` ajouté par le terminal → IPv4 récupérée directement dans la commande : `-var="my_ip=$(curl -4 -s https://checkip.amazonaws.com)"`.
+- Commandes git tapées sur une seule ligne, séparées par des virgules → une commande par ligne.
+- Nom de branche `<num>-terraform` refusé par le terminal : `<num>` était à remplacer par le numéro de l'issue (29).
+- PR #53 en double : son contenu était déjà sur `main` via la PR #50 (fichiers identiques) → fermée sans merge.
+- L'interface ne pouvait pas démarrer tant que `ui/app.py` n'était pas sur `main` → merge de la PR #57 avant le test de bout en bout.
+- Graphique du tableau de bord dans l'ordre alphabétique → remis dans l'ordre ADKAR (PR #58).
+- `data/` n'était plus ignoré par git depuis la PR #46 (seul `data/raw/` l'était) : la base ChromaDB locale risquait d'être poussée sur GitHub → `data/` remis dans le `.gitignore` (PR #..).
+
+**Preuve :** `docs/img/j6_api_docs.png`, `docs/img/j6_stats_before.png`, `docs/img/j6_stats_after.png`, `docs/img/j6_terraform_plan.png`, `docs/img/j6_dashboard.png`, `docs/img/j6_plan.png`, `docs/img/j6_analyse.png`, `docs/img/j6_demo.mov` (ou lien Google Drive), PR #51, #54, #55, #56, #57, #58
